@@ -9,6 +9,9 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     name: Build st-smpl
@@ -22,12 +25,19 @@ jobs:
         run: pacman -Sy --noconfirm --needed git
 
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Install build dependencies
         run: |
           pacman -Syu --noconfirm --needed \
-            base-devel \
-            libx11 libxft libxrandr \
+            base-devel pkgconf \
+            fontconfig freetype2 \
+            wayland wayland-protocols libxkbcommon \
+            pixman \
             harfbuzz \
             imlib2
 
@@ -35,12 +45,12 @@ jobs:
         run: make
 
       - name: Strip binary
-        run: strip st
+        run: strip st-wl
 
-      - name: Rename for release
+      - name: Prepare release assets
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          cp st st-smpl-${VERSION}-x86_64
+          cp st-wl "st-smpl-${VERSION}-x86_64"
           echo "BIN=st-smpl-${VERSION}-x86_64" >> "$GITHUB_ENV"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
