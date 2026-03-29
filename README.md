@@ -15,6 +15,8 @@ Refer to [https://st.suckless.org/](https://st.suckless.org/) for details on the
 
 ### Changelog:
 
+2026-03-29 - Fixed CI: tolerate duplicate-release 422 in shared auto-release workflow
+
 2026-01-08 - Added the xresources-xdefaults patch
 
 2025-10-28 - Added the selectionbg-alpha patch
