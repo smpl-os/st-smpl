@@ -1,5 +1,5 @@
 # st version
-VERSION = 1.0.15
+VERSION = 1.0.16
 
 # Uncomment for debug builds (adds fprintf tracing, disables strip)
 # DEBUGFLAGS = -g -O0 -DSTWL_DEBUG
