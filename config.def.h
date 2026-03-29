@@ -514,7 +514,7 @@ static Key key[] = {
 	{ XKB_KEY_KP_Insert,     MOD_MASK_ANY,     "\033[2~",      +1,    0},
 	{ XKB_KEY_KP_Delete,     MOD_MASK_CTRL,    "\033[M",       -1,    0},
 	{ XKB_KEY_KP_Delete,     MOD_MASK_CTRL,    "\033[3;5~",    +1,    0},
-	{ XKB_KEY_KP_Delete,     MOD_MASK_SHIFT,      "\033[2K",      -1,    0},
+	{ XKB_KEY_KP_Delete,     MOD_MASK_SHIFT,      "\033[3;2~",    -1,    0},
 	{ XKB_KEY_KP_Delete,     MOD_MASK_SHIFT,      "\033[3;2~",    +1,    0},
 	#if DELKEY_PATCH
 	{ XKB_KEY_KP_Delete,     MOD_MASK_ANY,     "\033[3~",      -1,    0},
@@ -586,7 +586,7 @@ static Key key[] = {
 	{ XKB_KEY_Insert,        MOD_MASK_ANY,     "\033[2~",      +1,    0},
 	{ XKB_KEY_Delete,        MOD_MASK_CTRL,    "\033[M",       -1,    0},
 	{ XKB_KEY_Delete,        MOD_MASK_CTRL,    "\033[3;5~",    +1,    0},
-	{ XKB_KEY_Delete,        MOD_MASK_SHIFT,      "\033[2K",      -1,    0},
+	{ XKB_KEY_Delete,        MOD_MASK_SHIFT,      "\033[3;2~",    -1,    0},
 	{ XKB_KEY_Delete,        MOD_MASK_SHIFT,      "\033[3;2~",    +1,    0},
 	#if DELKEY_PATCH
 	{ XKB_KEY_Delete,        MOD_MASK_ANY,     "\033[3~",      -1,    0},
