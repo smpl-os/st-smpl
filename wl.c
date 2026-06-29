@@ -591,6 +591,17 @@ void
 ptraxis(void * data, struct wl_pointer * pointer, uint32_t time, uint32_t axis,
 		wl_fixed_t value)
 {
+	/*
+	 * A value of 0 marks the end of a scroll sequence. At the wl_seat version
+	 * we bind (4) there is no wl_pointer.axis_stop event, so compositors signal
+	 * the stop with an axis event whose value is 0. It carries no direction, so
+	 * it must be ignored: otherwise `value > 0 ? +1 : -1` reads it as scroll-up,
+	 * which cancels a just-applied scroll-down and jerks the buffer back up
+	 * (and reports a spurious scroll-up to apps in mouse mode).
+	 */
+	if (value == 0)
+		return;
+
 	int dir = value > 0 ? +1 : -1;
 	int screen = tisaltscr() ? S_ALT : S_PRI;
 
