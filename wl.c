@@ -592,6 +592,23 @@ ptraxis(void * data, struct wl_pointer * pointer, uint32_t time, uint32_t axis,
 		wl_fixed_t value)
 {
 	/*
+	 * Diagnostic hook: set env var ST_WL_SCROLL_DEBUG=1 to log every axis
+	 * event to stderr. Useful when a compositor upgrade (Hyprland 0.56+)
+	 * silently changes what events it emits for scroll and the existing
+	 * fix stops working.
+	 */
+	static int dbg_checked = 0, dbg_on = 0;
+	if (!dbg_checked) {
+		dbg_on = getenv("ST_WL_SCROLL_DEBUG") != NULL;
+		dbg_checked = 1;
+	}
+	if (dbg_on) {
+		fprintf(stderr, "[st-wl-scroll] axis=%u value=%d (%.3f) mods=0x%x mode_mouse=%d\n",
+			axis, value, wl_fixed_to_double(value),
+			wl.xkb.mods, IS_SET(MODE_MOUSE) ? 1 : 0);
+	}
+
+	/*
 	 * A value of 0 marks the end of a scroll sequence. At the wl_seat version
 	 * we bind (4) there is no wl_pointer.axis_stop event, so compositors signal
 	 * the stop with an axis event whose value is 0. It carries no direction, so
